@@ -98,7 +98,8 @@ const parseDate = (dateStr: string): Date => {
 export const fetchNews = async (): Promise<NewsItem[]> => {
     const promises = SOURCES.map(async (source) => {
         try {
-            const response = await fetch(`${RSS2JSON_API}${encodeURIComponent(source.url)}`);
+            // Add timestamp to bypass browser caching
+            const response = await fetch(`${RSS2JSON_API}${encodeURIComponent(source.url)}&_t=${Date.now()}`);
             const data = await response.json();
 
             if (data.status !== 'ok') {
