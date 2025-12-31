@@ -76,7 +76,7 @@ export const HeroArticle = ({ article }: HeroArticleProps) => {
                     <img
                         src={imgSrc}
                         alt={article.title}
-                        className={`h-full w-full transition-transform duration-700 hover:scale-105 ${isFallback ? 'object-contain p-8 bg-white' : 'object-cover'
+                        className={`h-full w-full transition-transform duration-700 hover:scale-105 ${isFallback ? 'object-contain p-8 bg-pattern-dots' : 'object-cover'
                             }`}
                         onError={() => setImgSrc(FALLBACK_IMAGE_URL)}
                     />

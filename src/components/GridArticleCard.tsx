@@ -38,7 +38,7 @@ export const GridArticleCard = ({ article }: GridArticleCardProps) => {
                 <img
                     src={imgSrc}
                     alt={article.title}
-                    className={`h-full w-full transition-transform duration-500 group-hover:scale-105 ${isFallback ? 'object-contain p-4 bg-white' : 'object-cover'
+                    className={`h-full w-full transition-transform duration-500 group-hover:scale-105 ${isFallback ? 'object-contain p-4 bg-pattern-dots' : 'object-cover'
                         }`}
                     onError={() => setImgSrc(FALLBACK_IMAGE_URL)}
                 />

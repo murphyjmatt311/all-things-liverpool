@@ -27,3 +27,11 @@
     @apply font-serif leading-relaxed;
   }
 }
+
+@layer utilities {
+  .bg-pattern-dots {
+    background-color: #ffffff;
+    background-image: radial-gradient(#e5e7eb 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+}
