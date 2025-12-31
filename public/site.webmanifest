@@ -1,0 +1,19 @@
+{
+    "name": "All Things Liverpool",
+    "short_name": "LFC News",
+    "icons": [
+        {
+            "src": "/lfc-fan-logo.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/lfc-fan-logo.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ],
+    "theme_color": "#C8102E",
+    "background_color": "#F9F7F2",
+    "display": "standalone"
+}
