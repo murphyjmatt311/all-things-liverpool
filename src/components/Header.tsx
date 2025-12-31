@@ -15,19 +15,19 @@ export const Header = () => {
           </p>
         </div>
 
-        {/* Center: Logo */}
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+        {/* Center: Logo (Absolute on Desktop, Relative on Mobile) */}
+        <div className="mt-4 md:mt-0 md:absolute md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2">
           <div className="flex flex-col items-center">
             <img
               src="/lfc-fan-logo.png"
               alt="LFC Logo"
-              className="h-16 w-auto object-contain"
+              className="h-12 md:h-16 w-auto object-contain"
             />
           </div>
         </div>
 
-        {/* Right: Empty div to balance layout if needed, or just remove */}
-        <div className="z-10 w-[120px]"></div>
+        {/* Right: Spacer for desktop balance */}
+        <div className="hidden md:block z-10 w-[120px]"></div>
 
       </div>
     </header>
