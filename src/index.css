@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+@theme {
+  --color-lfc-red: #C8102E;
+  --color-lfc-teal: #00B2A9;
+  --color-lfc-gold: #F6EB61;
+
+  --font-sans: Inter, system-ui, sans-serif;
+  --font-serif: Merriweather, Georgia, serif;
+}
+
+@layer base {
+  body {
+    @apply bg-[#F9F7F2] text-gray-900 antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-sans font-bold tracking-tight;
+  }
+
+  p {
+    @apply font-serif leading-relaxed;
+  }
+}
