@@ -65,9 +65,16 @@ export const HeroArticle = ({ article }: HeroArticleProps) => {
                     </h2>
                 </a>
 
-                <p className="text-gray-600 font-serif text-lg leading-relaxed mb-6 line-clamp-3">
-                    {article.contentSnippet?.replace(/<[^>]+>/g, '') || article.content?.replace(/<[^>]+>/g, '').slice(0, 200) + '...'}
-                </p>
+                {(() => {
+                    const summaryText = article.contentSnippet?.replace(/<[^>]+>/g, '') || article.content?.replace(/<[^>]+>/g, '').slice(0, 200) + '...';
+                    const isValidSummary = summaryText && summaryText.length > 3 && summaryText !== '...';
+
+                    return isValidSummary ? (
+                        <p className="text-gray-600 font-serif text-lg leading-relaxed mb-6 line-clamp-3">
+                            {summaryText}
+                        </p>
+                    ) : null;
+                })()}
 
                 <div className="flex items-center gap-3 mt-auto">
                     <div className="h-8 w-8 rounded-full bg-gray-200 overflow-hidden">
