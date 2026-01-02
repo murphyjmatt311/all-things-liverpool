@@ -3,6 +3,7 @@ import { HeroArticle } from './HeroArticle';
 import { GridArticleCard } from './GridArticleCard';
 import { NewsFeedSkeleton } from './NewsFeedSkeleton';
 import { PodcastSection } from './PodcastSection';
+import { MatchBanner } from './MatchBanner';
 import { AlertCircle, ChevronDown, ChevronUp } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useMemo, useState } from 'react';
@@ -100,6 +101,10 @@ export const NewsFeed = () => {
                         <GridArticleCard key={article.link} article={article} hideSummary={true} />
                     ))}
                 </div>
+            </div>
+
+            <div className="lg:hidden mb-8">
+                <MatchBanner />
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 pt-6 lg:border-t lg:border-gray-100 lg:pt-12">
