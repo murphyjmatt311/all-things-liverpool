@@ -52,8 +52,8 @@ export const GridArticleCard = ({ article, hideSummary = false }: GridArticleCar
                 </a>
 
                 {!hideSummary && (
-                    <p className="text-gray-600 text-sm font-serif line-clamp-3 mb-4 flex-1 hidden md:block">
-                        {article.contentSnippet?.replace(/<[^>]+>/g, '').slice(0, 200) + (article.contentSnippet && article.contentSnippet.length > 200 ? '...' : '') || article.content?.replace(/<[^>]+>/g, '').slice(0, 100) + '...'}
+                    <p className="text-gray-600 text-sm font-serif line-clamp-2 mb-4 flex-1 hidden md:block">
+                        {article.contentSnippet?.replace(/<[^>]+>/g, '').slice(0, 120) + (article.contentSnippet && article.contentSnippet.length > 120 ? '...' : '') || article.content?.replace(/<[^>]+>/g, '').slice(0, 100) + '...'}
                     </p>
                 )}
 
