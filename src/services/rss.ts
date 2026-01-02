@@ -30,7 +30,7 @@ const SOURCES = [
     { name: 'The Anfield Wrap', url: 'https://feeds.megaphone.fm/COMG6516013185', type: 'podcast' },
 ];
 
-const PROXY_URL = 'https://api.allorigins.win/get?url=';
+const RSS2JSON_API = 'https://api.rss2json.com/v1/api.json?rss_url=';
 
 // Keywords for auto-tagging
 const TAG_KEYWORDS: Record<string, string[]> = {
@@ -87,55 +87,28 @@ const generateTags = (title: string, content: string): string[] => {
     return Array.from(tags).slice(0, 4);
 };
 
-const getElementText = (parent: Element, selector: string): string => {
-    const element = parent.querySelector(selector);
-    return element?.textContent?.trim() || '';
-};
-
-const getImageUrl = (item: Element): string | undefined => {
-    // Check enclosure
-    const enclosure = item.querySelector('enclosure');
-    if (enclosure?.getAttribute('type')?.startsWith('image/')) {
-        return enclosure.getAttribute('url') || undefined;
+const parseDate = (dateStr: string): Date => {
+    // Handle SQL-like format YYYY-MM-DD HH:mm:ss returned by rss2json
+    if (/^\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2}$/.test(dateStr)) {
+        return new Date(dateStr.replace(' ', 'T') + 'Z');
     }
-
-    // Check media:content or content:encoded for images
-    const mediaContent = item.getElementsByTagName('media:content')[0] || item.getElementsByTagName('content')[0];
-    if (mediaContent?.getAttribute('url')) {
-        return mediaContent.getAttribute('url') || undefined;
-    }
-
-    // Check for images in description/content
-    const content = item.querySelector('description')?.textContent || item.querySelector('content\\:encoded')?.textContent || '';
-    const imgMatch = content.match(/<img[^>]+src="([^">]+)"/);
-    if (imgMatch) return imgMatch[1];
-
-    return undefined;
+    return new Date(dateStr);
 };
 
 export const fetchNews = async (): Promise<NewsItem[]> => {
-    const parser = new DOMParser();
-
     const promises = SOURCES.map(async (source) => {
         try {
-            // Add timestamp to bypass proxy cache
-            const targetUrl = `${source.url}${source.url.includes('?') ? '&' : '?'}_t=${Date.now()}`;
-            const response = await fetch(`${PROXY_URL}${encodeURIComponent(targetUrl)}`);
+            // CRITICAL: Put the timestamp INSIDE the rss_url to force rss2json to fetch fresh data
+            const targetUrl = source.url + (source.url.includes('?') ? '&' : '?') + '_t=' + Date.now();
+            const response = await fetch(`${RSS2JSON_API}${encodeURIComponent(targetUrl)}`);
             const data = await response.json();
 
-            if (!data.contents) return [];
+            if (data.status !== 'ok') {
+                return [];
+            }
 
-            const xml = parser.parseFromString(data.contents, 'text/xml');
-            const items = Array.from(xml.querySelectorAll('item, entry'));
-
-            return items.map((item) => {
-                const title = getElementText(item, 'title');
-                const link = item.querySelector('link')?.getAttribute('href') || getElementText(item, 'link');
-                const pubDate = getElementText(item, 'pubDate') || getElementText(item, 'published') || getElementText(item, 'updated');
-                const description = getElementText(item, 'description') || getElementText(item, 'summary');
-                const content = getElementText(item, 'content\\:encoded') || getElementText(item, 'content');
-
-                let imageUrl = getImageUrl(item);
+            return data.items.map((item: any) => {
+                let imageUrl = item.thumbnail || item.enclosure?.link;
 
                 // Enhance image quality for Reach PLC sites (Liverpool.com, Echo)
                 if (imageUrl && (imageUrl.includes('i2-prod.liverpool.com') || imageUrl.includes('i2-prod.liverpoolecho.co.uk'))) {
@@ -154,29 +127,26 @@ export const fetchNews = async (): Promise<NewsItem[]> => {
 
                 // Handle Reddit thumbnails
                 if (source.name === 'Reddit') {
-                    const thumbnail = item.getElementsByTagName('thumbnail')[0]?.getAttribute('url');
-                    if (thumbnail && !['self', 'default', 'nsfw'].includes(thumbnail)) {
-                        imageUrl = thumbnail;
-                    } else {
+                    if (!imageUrl || ['self', 'default', 'nsfw'].includes(imageUrl)) {
                         imageUrl = FALLBACK_IMAGE_URL;
                     }
                 }
 
-                const tags = generateTags(title, description);
+                const tags = generateTags(item.title || '', item.description || '');
 
                 return {
-                    title,
-                    link,
-                    pubDate,
-                    contentSnippet: description,
-                    content,
+                    title: item.title,
+                    link: item.link || item.enclosure?.link || '',
+                    pubDate: item.pubDate,
+                    contentSnippet: item.description,
+                    content: item.content,
                     source: source.name,
-                    isoDate: pubDate,
+                    isoDate: item.pubDate,
                     enclosure: imageUrl ? { url: imageUrl } : undefined,
                     tags,
                     type: (source as any).type || 'news',
                 };
-            });
+            }) as NewsItem[];
         } catch (error) {
             console.error(`Error fetching ${source.name}:`, error);
             return [];
@@ -186,6 +156,5 @@ export const fetchNews = async (): Promise<NewsItem[]> => {
     const results = await Promise.all(promises);
     return results
         .flat()
-        .filter(item => item.title && item.link)
-        .sort((a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime());
+        .sort((a, b) => parseDate(b.isoDate || b.pubDate).getTime() - parseDate(a.isoDate || a.pubDate).getTime());
 };
