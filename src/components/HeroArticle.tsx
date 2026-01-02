@@ -33,46 +33,45 @@ export const HeroArticle = ({ article }: HeroArticleProps) => {
     }
 
     return (
-        <article className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center mb-16">
+        <article className="grid grid-cols-1 md:grid-cols-2 gap-8 h-full items-stretch">
             {/* Text Content */}
-            <div className="lg:col-span-5 order-2 lg:order-1">
+            <div className="flex flex-col justify-center order-2 md:order-1 py-4">
                 <div className="flex items-center space-x-2 mb-4">
                     <span className={`px-2 py-1 rounded text-xs font-bold uppercase tracking-wider ${getSourceStyles(article.source)}`}>
                         {article.source}
                     </span>
-                    <span className="text-white/80 text-sm font-medium flex items-center">
+                    <span className="text-gray-400 text-sm font-medium flex items-center">
                         <Clock className="h-3 w-3 mr-1" />
                         {timeAgo}
                     </span>
                 </div>
 
                 <a href={article.link} target="_blank" rel="noopener noreferrer" className="group">
-                    <h2 className="text-4xl lg:text-5xl font-serif font-bold text-gray-900 leading-tight mb-4 group-hover:text-lfc-red transition-colors">
+                    <h2 className="text-3xl lg:text-4xl font-serif font-bold text-gray-900 leading-tight mb-4 group-hover:text-lfc-red transition-colors">
                         {article.title}
                     </h2>
                 </a>
 
-                <p className="text-gray-600 font-serif text-lg leading-relaxed mb-6 line-clamp-3">
+                <p className="text-gray-600 font-serif text-base leading-relaxed mb-6 line-clamp-3">
                     {article.contentSnippet?.replace(/<[^>]+>/g, '') || article.content?.replace(/<[^>]+>/g, '').slice(0, 200) + '...'}
                 </p>
 
-                <div className="flex items-center gap-3">
-                    <div className="h-10 w-10 rounded-full bg-gray-200 overflow-hidden">
+                <div className="flex items-center gap-3 mt-auto">
+                    <div className="h-8 w-8 rounded-full bg-gray-200 overflow-hidden">
                         {/* Placeholder Avatar */}
-                        <div className="h-full w-full bg-lfc-teal/10 flex items-center justify-center text-lfc-teal font-bold text-xs">
+                        <div className="h-full w-full bg-lfc-teal/10 flex items-center justify-center text-lfc-teal font-bold text-[10px]">
                             {article.source.substring(0, 2)}
                         </div>
                     </div>
                     <div className="flex flex-col">
-                        <span className="text-sm font-bold text-gray-900">{article.source}</span>
-                        <span className="text-xs text-gray-500">{timeAgo}</span>
+                        <span className="text-xs font-bold text-gray-900">{article.source}</span>
                     </div>
                 </div>
             </div>
 
             {/* Hero Image */}
-            <div className="lg:col-span-7 order-1 lg:order-2">
-                <a href={article.link} target="_blank" rel="noopener noreferrer" className="block overflow-hidden rounded-lg shadow-sm aspect-[16/10]">
+            <div className="order-1 md:order-2 h-full min-h-[300px]">
+                <a href={article.link} target="_blank" rel="noopener noreferrer" className="block h-full w-full overflow-hidden rounded-lg shadow-sm">
                     <img
                         src={imgSrc}
                         alt={article.title}
