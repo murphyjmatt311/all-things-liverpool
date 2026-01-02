@@ -77,7 +77,8 @@ export const NewsFeed = () => {
     }
 
     const heroArticle = mainNews[0];
-    const gridArticles = mainNews.slice(1, 1 + visibleCount); // Next 'visibleCount' articles
+    const featuredArticles = mainNews.slice(1, 3); // Next 2 articles for the "Bento Box" stack
+    const gridArticles = mainNews.slice(3, 3 + visibleCount); // Remaining articles for the grid
     const sidebarArticles = mainNews.slice(10, 15); // Keep sidebar static or independent
 
     const handleLoadMore = () => {
@@ -86,18 +87,31 @@ export const NewsFeed = () => {
 
     return (
         <div className="py-10">
-            {/* Hero Section - Desktop Only */}
-            <div className="hidden lg:block">
-                <HeroArticle article={heroArticle} />
+            {/* Desktop Header: Bento Box Layout (Hero + 2 Stacked) */}
+            <div className="hidden lg:grid grid-cols-3 gap-8 mb-12">
+                {/* Left Column: Hero Article (Takes 2/3) */}
+                <div className="col-span-2">
+                    <HeroArticle article={heroArticle} />
+                </div>
+
+                {/* Right Column: Stacked Articles (Takes 1/3) */}
+                <div className="col-span-1 flex flex-col gap-8">
+                    {featuredArticles.map(article => (
+                        <GridArticleCard key={article.link} article={article} />
+                    ))}
+                </div>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 pt-6 lg:border-t lg:border-gray-100 lg:pt-12">
                 {/* Main Content Grid */}
                 <div className="lg:col-span-8">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
-                        {/* Mobile only: First article as standard card */}
-                        <div className="block lg:hidden">
+                        {/* Mobile only: First 3 articles as standard cards */}
+                        <div className="contents lg:hidden">
                             <GridArticleCard article={heroArticle} />
+                            {featuredArticles.map(article => (
+                                <GridArticleCard key={article.link} article={article} />
+                            ))}
                         </div>
 
                         {gridArticles.map((article) => (
