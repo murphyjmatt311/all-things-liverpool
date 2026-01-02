@@ -4,6 +4,7 @@ import type { NewsItem } from '../services/rss';
 import { getSourceStyles } from '../utils/sourceStyles';
 import { Clock } from 'lucide-react';
 import { FALLBACK_IMAGE_URL } from '../constants';
+import { MatchBanner } from './MatchBanner';
 
 interface HeroArticleProps {
     article: NewsItem;
@@ -34,6 +35,9 @@ export const HeroArticle = ({ article }: HeroArticleProps) => {
 
     return (
         <article className="flex flex-col h-full gap-6">
+            {/* Match Banner */}
+            <MatchBanner />
+
             {/* Hero Image */}
             <div className="order-1 w-full">
                 <a href={article.link} target="_blank" rel="noopener noreferrer" className="block w-full overflow-hidden rounded-lg shadow-sm aspect-[16/9]">
