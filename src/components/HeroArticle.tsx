@@ -33,10 +33,23 @@ export const HeroArticle = ({ article }: HeroArticleProps) => {
     }
 
     return (
-        <article className="grid grid-cols-1 md:grid-cols-2 gap-8 h-full items-stretch">
+        <article className="flex flex-col h-full gap-6">
+            {/* Hero Image */}
+            <div className="order-1 w-full">
+                <a href={article.link} target="_blank" rel="noopener noreferrer" className="block w-full overflow-hidden rounded-lg shadow-sm aspect-[16/9]">
+                    <img
+                        src={imgSrc}
+                        alt={article.title}
+                        className={`h-full w-full transition-transform duration-700 hover:scale-105 ${isFallback ? 'object-contain p-8 bg-pattern-dots' : 'object-cover'
+                            }`}
+                        onError={() => setImgSrc(FALLBACK_IMAGE_URL)}
+                    />
+                </a>
+            </div>
+
             {/* Text Content */}
-            <div className="flex flex-col justify-center order-2 md:order-1 py-4">
-                <div className="flex items-center space-x-2 mb-4">
+            <div className="flex flex-col order-2 flex-1">
+                <div className="flex items-center space-x-2 mb-3">
                     <span className={`px-2 py-1 rounded text-xs font-bold uppercase tracking-wider ${getSourceStyles(article.source)}`}>
                         {article.source}
                     </span>
@@ -47,12 +60,12 @@ export const HeroArticle = ({ article }: HeroArticleProps) => {
                 </div>
 
                 <a href={article.link} target="_blank" rel="noopener noreferrer" className="group">
-                    <h2 className="text-3xl lg:text-4xl font-serif font-bold text-gray-900 leading-tight mb-4 group-hover:text-lfc-red transition-colors">
+                    <h2 className="text-3xl lg:text-4xl font-serif font-bold text-gray-900 leading-tight mb-3 group-hover:text-lfc-red transition-colors">
                         {article.title}
                     </h2>
                 </a>
 
-                <p className="text-gray-600 font-serif text-base leading-relaxed mb-6 line-clamp-3">
+                <p className="text-gray-600 font-serif text-lg leading-relaxed mb-6 line-clamp-3">
                     {article.contentSnippet?.replace(/<[^>]+>/g, '') || article.content?.replace(/<[^>]+>/g, '').slice(0, 200) + '...'}
                 </p>
 
@@ -67,19 +80,6 @@ export const HeroArticle = ({ article }: HeroArticleProps) => {
                         <span className="text-xs font-bold text-gray-900">{article.source}</span>
                     </div>
                 </div>
-            </div>
-
-            {/* Hero Image */}
-            <div className="order-1 md:order-2 h-full min-h-[300px]">
-                <a href={article.link} target="_blank" rel="noopener noreferrer" className="block h-full w-full overflow-hidden rounded-lg shadow-sm">
-                    <img
-                        src={imgSrc}
-                        alt={article.title}
-                        className={`h-full w-full transition-transform duration-700 hover:scale-105 ${isFallback ? 'object-contain p-8 bg-pattern-dots' : 'object-cover'
-                            }`}
-                        onError={() => setImgSrc(FALLBACK_IMAGE_URL)}
-                    />
-                </a>
             </div>
         </article>
     );

@@ -97,7 +97,7 @@ export const NewsFeed = () => {
                 {/* Right Column: Stacked Articles (Takes 1/3) */}
                 <div className="col-span-1 flex flex-col gap-8">
                     {featuredArticles.map(article => (
-                        <GridArticleCard key={article.link} article={article} />
+                        <GridArticleCard key={article.link} article={article} hideSummary={true} />
                     ))}
                 </div>
             </div>
