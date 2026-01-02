@@ -23,11 +23,10 @@ export const HeroArticle = ({ article }: HeroArticleProps) => {
     let timeAgo = 'Recently';
     if (dateStr) {
         try {
-            let date = new Date(dateStr);
-            if (date > new Date() && /^\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2}$/.test(dateStr)) {
-                date = new Date(dateStr.replace(' ', 'T') + 'Z');
+            const date = new Date(dateStr);
+            if (!isNaN(date.getTime())) {
+                timeAgo = formatDistanceToNow(date, { addSuffix: true }).replace(/^in /, '').replace(/^about /, '');
             }
-            timeAgo = formatDistanceToNow(date, { addSuffix: true }).replace(/^in /, '').replace(/^about /, '');
         } catch {
             // fallback
         }
