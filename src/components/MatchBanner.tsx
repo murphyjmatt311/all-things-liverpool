@@ -22,7 +22,7 @@ export const MatchBanner = () => {
                     <span>Sun 14 Jan</span>
                 </div>
                 <div className="text-2xl font-bold text-gray-900 leading-none mb-1">
-                    16:30
+                    11:30 AM ET
                 </div>
                 <div className="flex items-center text-gray-400 text-xs font-medium">
                     <MapPin className="h-3 w-3 mr-1" />
@@ -32,8 +32,12 @@ export const MatchBanner = () => {
 
             {/* Away Team (Fulham) */}
             <div className="flex items-center gap-3 flex-1 justify-start">
-                <div className="h-12 w-12 rounded-full bg-black flex items-center justify-center text-white font-bold text-xs border-2 border-gray-100">
-                    FUL
+                <div className="h-12 w-12 relative">
+                    <img
+                        src="/fulham-logo.png"
+                        alt="Fulham FC"
+                        className="h-full w-full object-contain"
+                    />
                 </div>
                 <span className="hidden md:block font-bold text-gray-900 text-lg">Fulham</span>
             </div>
