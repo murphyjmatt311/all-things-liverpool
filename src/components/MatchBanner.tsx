@@ -22,7 +22,7 @@ export const MatchBanner = () => {
                     <span>Sun 14 Jan</span>
                 </div>
                 <div className="text-2xl font-bold text-gray-900 leading-none mb-1">
-                    11:30 AM ET
+                    10:00 AM CT
                 </div>
                 <div className="flex items-center text-gray-400 text-xs font-medium">
                     <MapPin className="h-3 w-3 mr-1" />
