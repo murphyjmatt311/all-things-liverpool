@@ -76,17 +76,7 @@ export const HeroArticle = ({ article }: HeroArticleProps) => {
                     ) : null;
                 })()}
 
-                <div className="flex items-center gap-3 mt-auto">
-                    <div className="h-8 w-8 rounded-full bg-gray-200 overflow-hidden">
-                        {/* Placeholder Avatar */}
-                        <div className="h-full w-full bg-lfc-teal/10 flex items-center justify-center text-lfc-teal font-bold text-[10px]">
-                            {article.source.substring(0, 2)}
-                        </div>
-                    </div>
-                    <div className="flex flex-col">
-                        <span className="text-xs font-bold text-gray-900">{article.source}</span>
-                    </div>
-                </div>
+
             </div>
         </article>
     );
