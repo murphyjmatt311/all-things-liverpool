@@ -91,7 +91,7 @@ export const NewsFeed = () => {
                 <HeroArticle article={heroArticle} />
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 border-t border-gray-100 pt-12">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 pt-6 lg:border-t lg:border-gray-100 lg:pt-12">
                 {/* Main Content Grid */}
                 <div className="lg:col-span-8">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
