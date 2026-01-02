@@ -52,7 +52,7 @@ export const GridArticleCard = ({ article }: GridArticleCardProps) => {
                 </a>
 
                 <p className="text-gray-600 text-sm font-serif line-clamp-3 mb-4 flex-1 hidden md:block">
-                    {article.contentSnippet?.replace(/<[^>]+>/g, '') || article.content?.replace(/<[^>]+>/g, '').slice(0, 100) + '...'}
+                    {article.contentSnippet?.replace(/<[^>]+>/g, '').slice(0, 200) + (article.contentSnippet && article.contentSnippet.length > 200 ? '...' : '') || article.content?.replace(/<[^>]+>/g, '').slice(0, 100) + '...'}
                 </p>
 
                 <div className="flex items-center justify-between mt-auto">
