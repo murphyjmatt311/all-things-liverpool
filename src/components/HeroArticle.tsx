@@ -33,7 +33,7 @@ export const HeroArticle = ({ article }: HeroArticleProps) => {
     }
 
     return (
-        <article className="flex flex-col h-full gap-6">
+        <article className="flex flex-col h-full gap-4">
             {/* Match Banner */}
             <MatchBanner />
 

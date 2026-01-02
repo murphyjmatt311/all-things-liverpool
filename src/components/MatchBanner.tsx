@@ -19,7 +19,7 @@ export const MatchBanner = () => {
             <div className="flex flex-col items-center justify-center px-3 md:px-6 mx-2 md:mx-4 border-x border-gray-100 min-w-[110px] md:min-w-[140px]">
                 <div className="flex items-center text-lfc-red font-bold text-[10px] md:text-sm mb-1 uppercase tracking-wider">
                     <Calendar className="h-3 w-3 mr-1" />
-                    <span>Sun 14 Jan</span>
+                    <span>Sun 4 Jan</span>
                 </div>
                 <div className="text-lg md:text-2xl font-bold text-gray-900 leading-none mb-1">
                     10:00 AM ET

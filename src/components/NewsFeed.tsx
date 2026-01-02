@@ -87,9 +87,9 @@ export const NewsFeed = () => {
     };
 
     return (
-        <div className="py-10">
+        <div className="py-6 lg:py-8">
             {/* Desktop Header: Bento Box Layout (Hero + 2 Stacked) */}
-            <div className="hidden lg:grid grid-cols-3 gap-8 mb-12">
+            <div className="hidden lg:grid grid-cols-3 gap-8 mb-8">
                 {/* Left Column: Hero Article (Takes 2/3) */}
                 <div className="col-span-2">
                     <HeroArticle article={heroArticle} />
@@ -103,11 +103,11 @@ export const NewsFeed = () => {
                 </div>
             </div>
 
-            <div className="lg:hidden mb-8">
+            <div className="lg:hidden mb-6">
                 <MatchBanner />
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 pt-6 lg:border-t lg:border-gray-100 lg:pt-12">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 pt-4 lg:border-t lg:border-gray-100 lg:pt-8">
                 {/* Main Content Grid */}
                 <div className="lg:col-span-8">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
