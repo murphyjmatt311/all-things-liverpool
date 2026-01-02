@@ -86,13 +86,20 @@ export const NewsFeed = () => {
 
     return (
         <div className="py-10">
-            {/* Hero Section */}
-            <HeroArticle article={heroArticle} />
+            {/* Hero Section - Desktop Only */}
+            <div className="hidden lg:block">
+                <HeroArticle article={heroArticle} />
+            </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 border-t border-gray-100 pt-12">
                 {/* Main Content Grid */}
                 <div className="lg:col-span-8">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
+                        {/* Mobile only: First article as standard card */}
+                        <div className="block lg:hidden">
+                            <GridArticleCard article={heroArticle} />
+                        </div>
+
                         {gridArticles.map((article) => (
                             <GridArticleCard key={article.link} article={article} />
                         ))}
