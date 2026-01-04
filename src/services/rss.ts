@@ -16,7 +16,25 @@ export interface NewsItem {
     type?: 'podcast' | 'news';
 }
 
-const SOURCES = [
+interface RawRSSItem {
+    title: string;
+    link: string;
+    pubDate: string;
+    description: string;
+    content: string;
+    thumbnail: string;
+    enclosure?: {
+        link: string;
+    };
+}
+
+interface SourceConfig {
+    name: string;
+    url: string;
+    type?: 'podcast' | 'news';
+}
+
+const SOURCES: SourceConfig[] = [
     { name: 'Liverpool.com', url: 'https://www.liverpool.com/?service=rss' },
     { name: 'The Guardian', url: 'https://www.theguardian.com/football/liverpool/rss' },
     { name: 'Reddit', url: 'https://www.reddit.com/r/LiverpoolFC/hot.rss' },
@@ -107,7 +125,7 @@ export const fetchNews = async (): Promise<NewsItem[]> => {
                 return [];
             }
 
-            return data.items.map((item: any) => {
+            return (data.items as RawRSSItem[]).map((item) => {
                 let imageUrl = item.thumbnail || item.enclosure?.link;
 
                 // Enhance image quality for Reach PLC sites (Liverpool.com, Echo)
@@ -144,9 +162,9 @@ export const fetchNews = async (): Promise<NewsItem[]> => {
                     isoDate: item.pubDate,
                     enclosure: imageUrl ? { url: imageUrl } : undefined,
                     tags,
-                    type: (source as any).type || 'news',
+                    type: source.type || 'news',
                 };
-            }) as NewsItem[];
+            });
         } catch (error) {
             console.error(`Error fetching ${source.name}:`, error);
             return [];

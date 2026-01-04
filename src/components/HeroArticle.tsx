@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { formatDistanceToNow } from 'date-fns';
 import type { NewsItem } from '../services/rss';
 import { getSourceStyles } from '../utils/sourceStyles';
@@ -11,11 +11,15 @@ interface HeroArticleProps {
 }
 
 export const HeroArticle = ({ article }: HeroArticleProps) => {
-    const [imgSrc, setImgSrc] = useState(article.enclosure?.url || FALLBACK_IMAGE_URL);
+    const [hasError, setHasError] = useState(false);
+    const [prevUrl, setPrevUrl] = useState(article.enclosure?.url);
 
-    useEffect(() => {
-        setImgSrc(article.enclosure?.url || FALLBACK_IMAGE_URL);
-    }, [article.enclosure?.url]);
+    if (article.enclosure?.url !== prevUrl) {
+        setPrevUrl(article.enclosure?.url);
+        setHasError(false);
+    }
+
+    const imgSrc = (!hasError && article.enclosure?.url) ? article.enclosure.url : FALLBACK_IMAGE_URL;
 
     const isFallback = imgSrc === FALLBACK_IMAGE_URL;
 
@@ -45,7 +49,7 @@ export const HeroArticle = ({ article }: HeroArticleProps) => {
                         alt={article.title}
                         className={`h-full w-full transition-transform duration-700 hover:scale-105 ${isFallback ? 'object-contain p-8 bg-pattern-dots' : 'object-cover'
                             }`}
-                        onError={() => setImgSrc(FALLBACK_IMAGE_URL)}
+                        onError={() => setHasError(true)}
                     />
                 </a>
             </div>

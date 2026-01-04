@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { formatDistanceToNow } from 'date-fns';
 import type { NewsItem } from '../services/rss';
 import { getSourceStyles } from '../utils/sourceStyles';
@@ -11,11 +11,15 @@ interface GridArticleCardProps {
 }
 
 export const GridArticleCard = ({ article, hideSummary = false }: GridArticleCardProps) => {
-    const [imgSrc, setImgSrc] = useState(article.enclosure?.url || FALLBACK_IMAGE_URL);
+    const [hasError, setHasError] = useState(false);
+    const [prevUrl, setPrevUrl] = useState(article.enclosure?.url);
 
-    useEffect(() => {
-        setImgSrc(article.enclosure?.url || FALLBACK_IMAGE_URL);
-    }, [article.enclosure?.url]);
+    if (article.enclosure?.url !== prevUrl) {
+        setPrevUrl(article.enclosure?.url);
+        setHasError(false);
+    }
+
+    const imgSrc = (!hasError && article.enclosure?.url) ? article.enclosure.url : FALLBACK_IMAGE_URL;
 
     const isFallback = imgSrc === FALLBACK_IMAGE_URL;
 
@@ -40,7 +44,7 @@ export const GridArticleCard = ({ article, hideSummary = false }: GridArticleCar
                     alt={article.title}
                     className={`h-full w-full transition-transform duration-500 group-hover:scale-105 ${isFallback ? 'object-contain p-4 bg-pattern-dots' : 'object-cover'
                         }`}
-                    onError={() => setImgSrc(FALLBACK_IMAGE_URL)}
+                    onError={() => setHasError(true)}
                 />
             </a>
 
